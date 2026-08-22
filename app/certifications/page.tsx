@@ -1,0 +1,2 @@
+import {PageHero} from "@/components/page";import {CertificationGrid} from "@/components/certification-grid";
+export default function Certifications(){return <><PageHero eyebrow="Certifications / 06" title={<>Learning with <span className="gradient-text">purpose.</span></>}>Verified badges and certifications across Google Cloud, AWS, and entrepreneurship.</PageHero><section className="section pt-8"><CertificationGrid/></section></>}

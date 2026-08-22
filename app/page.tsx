@@ -1,0 +1,1 @@
+import {Hero} from "@/components/hero";import {ExperiencePreview,SkillsPreview,Contact} from "@/components/sections";import {HomeAbout,HomeProjects} from "@/components/home-enhancements";export default function Home(){return <main><Hero/><HomeAbout/><ExperiencePreview/><HomeProjects/><SkillsPreview/><Contact/></main>}

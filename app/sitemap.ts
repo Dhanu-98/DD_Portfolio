@@ -1,0 +1,1 @@
+import type {MetadataRoute} from "next";export default function sitemap():MetadataRoute.Sitemap{return["","about","experience","projects","skills","achievements","certifications","resume","contact"].map(p=>({url:`https://dhananjaydatir.dev/${p}`,lastModified:new Date()}))}

@@ -1,0 +1,17 @@
+# Dependencies and generated build output
+node_modules/
+.next/
+.npm-cache/
+
+# Local environment secrets
+.env
+.env.local
+.env.*.local
+
+# Local project scratch/output folders
+work/
+outputs/
+
+# OS and editor noise
+.DS_Store
+*.log
