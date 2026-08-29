@@ -1,9 +1,8 @@
 "use client";
 import Link from "next/link";
-import { FormEvent, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowUpRight, Github, Linkedin, Mail, MapPin, MessageCircle, Phone, Send } from "lucide-react";
-import { contact, experience, featured, skills } from "@/lib/data";
+import { contact, experience, featured, gmailComposeUrl, mailtoUrl, skills } from "@/lib/data";
 
 const whatsappUrl = `https://wa.me/919510690787?text=${encodeURIComponent("Hey Dhananjay! 👋 Your portfolio caught my attention—especially your work in AI, machine learning, and scalable software. I’d love to connect and learn more about what you’re building! 🚀")}`;
 const Reveal = ({children}:{children:React.ReactNode}) => <motion.div initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}} viewport={{once:true}}>{children}</motion.div>;
@@ -13,6 +12,36 @@ export function ExperiencePreview(){return <section className="border-y border-w
 export function ProjectsPreview(){return <section className="section"><p className="eyebrow">Selected work</p><div className="grid md:grid-cols-2 gap-4 mt-7">{featured.map(project=><Link key={project.slug} href={`/projects/${project.slug}`} className="glass rounded-2xl p-7"><h3 className="text-xl">{project.title}</h3><p className="muted mt-3 text-sm">{project.description}</p></Link>)}</div></section>}
 export function SkillsPreview(){return <section className="border-y border-white/10"><div className="section"><p className="eyebrow">Capabilities</p><div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 mt-7">{Object.entries(skills).map(([name,items])=><div className="glass rounded-2xl p-5" key={name}><p>{name}</p><p className="text-zinc-500 text-sm mt-3">{items.join(" · ")}</p></div>)}</div></div></section>}
 
-export function Contact(){return <section className="section" id="contact"><Reveal><div className="glass rounded-[2rem] p-8 sm:p-14 relative overflow-hidden"><div className="absolute w-72 h-72 rounded-full bg-violet-600/20 blur-[80px] right-0 top-0"/><div className="relative grid lg:grid-cols-2 gap-12"><div><p className="eyebrow">Contact</p><h2 className="heading mt-3">Let&apos;s make <span className="gradient-text">something matter.</span></h2><p className="muted mt-5">Open to conversations about ambitious products, intelligent systems, and meaningful engineering.</p><div className="mt-7 grid gap-4 text-sm text-zinc-300"><a href={`mailto:${contact.email}`} className="flex items-center gap-3 hover:text-white"><Mail size={17}/>{contact.email}</a><a href="tel:+919510690787" className="flex items-center gap-3 hover:text-white"><Phone size={17}/>{contact.phone}</a><a href={whatsappUrl} target="_blank" rel="noreferrer" className="flex items-center gap-3 hover:text-white"><MessageCircle size={17}/>Message on WhatsApp</a><a href={contact.linkedin} target="_blank" rel="noreferrer" className="flex items-center gap-3 hover:text-white"><Linkedin size={17}/>Connect on LinkedIn</a><a href={contact.github} target="_blank" rel="noreferrer" className="flex items-center gap-3 hover:text-white"><Github size={17}/>Explore GitHub</a><span className="flex items-center gap-3"><MapPin size={17}/>Mumbai, India</span></div></div><ContactForm/></div></div></Reveal></section>}
-
-function ContactForm(){const [status,setStatus]=useState("");const [sending,setSending]=useState(false);const submit=async(event:FormEvent<HTMLFormElement>)=>{event.preventDefault();const form=event.currentTarget;setSending(true);setStatus("");try{const response=await fetch("/api/contact",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(Object.fromEntries(new FormData(form)))});const result=await response.json().catch(()=>({}));if(!response.ok)throw new Error(result.error||"Message could not be sent.");form.reset();setStatus("Message sent successfully. Dhananjay will receive it by email.")}catch(error){setStatus(error instanceof Error?error.message:"Message could not be sent. Please use email, phone, or WhatsApp.")}finally{setSending(false)}};return <form onSubmit={submit} className="grid gap-3"><input required name="name" placeholder="Your name" className="bg-black/30 border border-white/10 rounded-xl px-4 py-3 outline-none focus:border-violet-400"/><input required name="email" type="email" placeholder="Email address" className="bg-black/30 border border-white/10 rounded-xl px-4 py-3 outline-none focus:border-violet-400"/><textarea required name="message" rows={4} placeholder="Tell me about your idea" className="bg-black/30 border border-white/10 rounded-xl px-4 py-3 outline-none focus:border-violet-400 resize-none"/><button disabled={sending} className="button button-primary justify-center disabled:opacity-60" type="submit">{sending?"Sending…":"Send message"}<Send size={15}/></button>{status&&<p role="status" className="text-sm text-zinc-300">{status}</p>}</form>}
+export function Contact({ showEmailActions = false }: { showEmailActions?: boolean }) {
+  return (
+    <section className="section" id="contact">
+      <Reveal>
+        <div className="glass rounded-[2rem] p-8 sm:p-14 relative overflow-hidden">
+          <div className="absolute w-72 h-72 rounded-full bg-violet-600/20 blur-[80px] right-0 top-0" />
+          <div className={`relative grid gap-12 ${showEmailActions ? "lg:grid-cols-2" : ""}`}>
+            <div>
+              <p className="eyebrow">Contact</p>
+              <h2 className="heading mt-3">Let&apos;s make <span className="gradient-text">something matter.</span></h2>
+              <p className="muted mt-5">Open to conversations about ambitious products, intelligent systems, and meaningful engineering.</p>
+              <div className="mt-7 grid gap-4 text-sm text-zinc-300">
+                <a href={mailtoUrl("Hello Dhananjay")} className="flex items-center gap-3 hover:text-white"><Mail size={17}/>{contact.email}</a>
+                <a href="tel:+919510690787" className="flex items-center gap-3 hover:text-white"><Phone size={17}/>{contact.phone}</a>
+                <a href={whatsappUrl} target="_blank" rel="noreferrer" className="flex items-center gap-3 hover:text-white"><MessageCircle size={17}/>Message on WhatsApp</a>
+                <a href={contact.linkedin} target="_blank" rel="noreferrer" className="flex items-center gap-3 hover:text-white"><Linkedin size={17}/>Connect on LinkedIn</a>
+                <a href={contact.github} target="_blank" rel="noreferrer" className="flex items-center gap-3 hover:text-white"><Github size={17}/>Explore GitHub</a>
+                <span className="flex items-center gap-3"><MapPin size={17}/>Mumbai, India</span>
+              </div>
+            </div>
+            {showEmailActions && (
+              <div className="flex flex-col justify-center gap-4">
+                <p className="text-sm text-zinc-400">Reach Dhananjay directly by email. Messages go to {contact.email}.</p>
+                <a className="button button-primary justify-center" href={gmailComposeUrl("Hello Dhananjay")} target="_blank" rel="noreferrer">Email on Gmail <Send size={15}/></a>
+                <a className="button button-ghost justify-center" href={mailtoUrl("Hello Dhananjay")}>Open email app <Mail size={15}/></a>
+              </div>
+            )}
+          </div>
+        </div>
+      </Reveal>
+    </section>
+  );
+}
