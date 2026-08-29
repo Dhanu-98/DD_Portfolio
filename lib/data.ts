@@ -1,4 +1,25 @@
 export const contact={email:"Dhananjay.datir01@gmail.com",phone:"+91 95106 90787",github:"https://github.com/Dhanu-98",linkedin:"https://in.linkedin.com/in/dhananjay-datir-baa604292"};
+
+export const resumeRequestSubject = "Request for résumé — Dhananjay Datir";
+export const resumeRequestBody = `Hi Dhananjay,
+
+I came across your portfolio and would like to request a copy of your résumé for a role I am hiring for / considering.
+
+Could you please share your latest résumé at your convenience?
+
+Thank you,`;
+
+export function gmailComposeUrl(subject: string, body?: string) {
+  const params = new URLSearchParams({ view: "cm", fs: "1", to: contact.email, su: subject });
+  if (body) params.set("body", body);
+  return `https://mail.google.com/mail/?${params.toString()}`;
+}
+
+export function mailtoUrl(subject: string, body?: string) {
+  const params = new URLSearchParams({ subject });
+  if (body) params.set("body", body);
+  return `mailto:${contact.email}?${params.toString()}`;
+}
 export const skills={Frontend:["React","Next.js","TypeScript","Tailwind CSS"],Backend:["Node.js","REST APIs","Python","Java"],"Machine Learning":["Scikit-learn","Pandas","TensorFlow","Data Analysis"],Databases:["PostgreSQL","MongoDB","MySQL"],Cloud:["Google Cloud","Vercel","Docker"],Tools:["Git","GitHub","Figma","Postman"]};
 export const experience=[{company:"Tech Mahindra",role:"Associate Application Support Engineer",period:"Jun 2025 - Present",text:"Application Support Engineer focused on incident and problem management, providing L1/L2 support for enterprise applications, SQL query analysis, log monitoring, RCA, ticketing, production support, and system stability."},{company:"Concentrix",role:"Senior Representative - Scheduling & Forecasting",period:"Sep 2024 - Jun 2025",text:"Promoted from Technical Advisor into workforce management. Managed real-time scheduling and forecasting, capacity planning, scheduling strategy, data analysis, performance reporting, and analytics."},{company:"Concentrix",role:"Technical Advisor",period:"Dec 2023 - Sep 2024",text:"Provided technical customer support, diagnosed complex issues, and built a strong foundation in customer experience and operational ownership."},{company:"QSpiders",role:"Data Science Intern",period:"Jun 2024 - Aug 2024",text:"Completed practical data-science training with Python and data analysis, translating concepts into applied problem-solving projects."},{company:"E-Cell UCOE",role:"Joint Secretary",period:"Jul 2024 - Aug 2025",text:"Led entrepreneurial initiatives, communications, and student engagement. Previously served as Public Relations Officer from Aug 2023 to Jun 2024."},{company:"Attivo Technology Solutions",role:"Web Developer Intern",period:"Aug 2023 - Oct 2023",text:"Contributed remotely to web development work, building practical product and interface experience."}];
 export const featured=[{slug:"telecom-churn-prediction",title:"Telecom Churn Prediction",tag:"Machine Learning",description:"An end-to-end ML workflow that detects at-risk subscribers and surfaces the signals behind retention decisions.",stack:["Python","Scikit-learn","Pandas"],color:"from-violet-500/50 to-indigo-950"},{slug:"expense-tracker",title:"Expense Tracker",tag:"Full Stack",description:"A focused personal finance experience with frictionless tracking, clear categories, and actionable insights.",stack:["React","Node.js","MongoDB"],color:"from-blue-500/40 to-cyan-950"}];
